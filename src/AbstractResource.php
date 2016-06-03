@@ -46,12 +46,19 @@ class AbstractResource
      */
     protected function createApiException(ClientException $e)
     {
-        /** @var ApiErrorResponse $apiErrorResponse */
-        $apiErrorResponse = $this->serializer->deserialize(
-            $e->getResponse()->getBody(),
-            ApiErrorResponse::class,
-            'json'
-        );
+        $response = $e->getResponse();
+        if ($response->getBody()->getSize() > 0) {
+            /** @var ApiErrorResponse $apiErrorResponse */
+            $apiErrorResponse = $this->serializer->deserialize(
+                $e->getResponse()->getBody(),
+                ApiErrorResponse::class,
+                'json'
+            );
+        } else {
+            $apiErrorResponse = new ApiErrorResponse();
+            $apiErrorResponse->setStatus($response->getStatusCode());
+            $apiErrorResponse->setMessage($response->getReasonPhrase());
+        }
 
         return new ApiException($apiErrorResponse, $e);
     }

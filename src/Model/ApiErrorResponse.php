@@ -70,6 +70,19 @@ class ApiErrorResponse
     }
 
     /**
+     * Set the error ID.
+     *
+     * @param string $id The error ID.
+     * @return ApiErrorResponse
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get the status.
      *
      * @return integer
@@ -77,6 +90,19 @@ class ApiErrorResponse
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set the status.
+     *
+     * @param integer $status The status.
+     * @return ApiErrorResponse
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
     /**
@@ -90,6 +116,18 @@ class ApiErrorResponse
     }
 
     /**
+     * Set the cause.
+     * @param string $cause
+     * @return ApiErrorResponse
+     */
+    public function setCause($cause)
+    {
+        $this->cause = $cause;
+
+        return $this;
+    }
+
+    /**
      * Get the error message.
      *
      * @return string
@@ -100,6 +138,19 @@ class ApiErrorResponse
     }
 
     /**
+     * Set the message.
+     *
+     * @param string $message The message.
+     * @return ApiErrorResponse
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
      * Get the details.
      *
      * @return array|null
@@ -107,5 +158,18 @@ class ApiErrorResponse
     public function getDetails()
     {
         return $this->details;
+    }
+
+    /**
+     * Set the details.
+     *
+     * @param array $details The details.
+     * @return ApiErrorResponse
+     */
+    public function setDetails(array $details = null)
+    {
+        $this->details = $details;
+
+        return $this;
     }
 }
