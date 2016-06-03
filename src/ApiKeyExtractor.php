@@ -3,6 +3,7 @@
 namespace Speicher210\KontaktIO;
 
 use GuzzleHttp\Client;
+use Speicher210\KontaktIO\Exception\ApiKeyExtractionInvalidCredentialsException;
 
 /**
  * Get the API key using username and password.
@@ -32,7 +33,7 @@ class ApiKeyExtractor
         $response = $client->get('https://panel.kontakt.io/api-key');
 
         if ($response->getStatusCode() !== 200) {
-            throw new \RuntimeException('Could not extract API key. Check credentials.');
+            throw new ApiKeyExtractionInvalidCredentialsException();
         }
 
         return (string)$response->getBody();
