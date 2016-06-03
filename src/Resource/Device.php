@@ -7,7 +7,7 @@ use Speicher210\KontaktIO\AbstractResource;
 use Speicher210\KontaktIO\Model\Device as DeviceModel;
 
 /**
- * Get service for devices.
+ * Device resource.
  */
 class Device extends AbstractResource
 {

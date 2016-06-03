@@ -4,6 +4,9 @@ namespace Speicher210\KontaktIO\Model;
 
 use JMS\Serializer\Annotation as JMS;
 
+/**
+ * Model representing a device.
+ */
 class Device
 {
     const PROXIMITY_IMMEDIATE = 'IMMEDIATE';

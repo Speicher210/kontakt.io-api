@@ -1,0 +1,23 @@
+{
+  "firstName": "First",
+  "lastName": "Last",
+  "role": "SUPERUSER",
+  "counters": {
+    "devices": {
+      "private": 1000,
+      "public": 0,
+      "shared": 0,
+      "sharedWithMe": 0
+    },
+    "venues": {
+      "private": 0,
+      "public": 0,
+      "shared": 0,
+      "sharedWithMe": 0
+    }
+  },
+  "id": "1e824479-defb-4c46-951e-76eccccb8f86",
+  "supervisorId": null,
+  "email": "test@email.com",
+  "uniqueId": "my_unique_id"
+}
