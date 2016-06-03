@@ -18,7 +18,7 @@ class ApiKeyHelper
      * @param string $password The password.
      * @return string
      */
-    public static function getApiKey($username, $password)
+    public function getApiKey($username, $password)
     {
         $client = new GuzzleHttpClient(['cookies' => true, 'allow_redirects' => false]);
         $client->post(
@@ -40,7 +40,7 @@ class ApiKeyHelper
         return (string)$response->getBody();
     }
 
-    public static function apiKeyIsValid($apiKey)
+    public function apiKeyIsValid($apiKey)
     {
         $client = new Client($apiKey);
 
