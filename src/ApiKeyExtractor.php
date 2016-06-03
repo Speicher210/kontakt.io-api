@@ -2,7 +2,7 @@
 
 namespace Speicher210\KontaktIO;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use Speicher210\KontaktIO\Exception\ApiKeyExtractionInvalidCredentialsException;
 
 /**
@@ -19,7 +19,7 @@ class ApiKeyExtractor
      */
     public static function getApiKey($username, $password)
     {
-        $client = new Client(['cookies' => true, 'allow_redirects' => false]);
+        $client = new GuzzleHttpClient(['cookies' => true, 'allow_redirects' => false]);
         $client->post(
             'https://panel.kontakt.io/signin',
             [
