@@ -5,6 +5,7 @@ namespace Speicher210\KontaktIO;
 use GuzzleHttp\Exception\ClientException;
 use JMS\Serializer\SerializerInterface;
 use Speicher210\KontaktIO\Exception\ApiException;
+use Speicher210\KontaktIO\Exception\ApiKeyInvalidException;
 use Speicher210\KontaktIO\Model\ApiErrorResponse;
 
 /**
@@ -47,6 +48,11 @@ class AbstractResource
     protected function createApiException(ClientException $e)
     {
         $response = $e->getResponse();
+
+        if ($response->getStatusCode() === 401 || $response->getStatusCode() === 403) {
+            throw new ApiKeyInvalidException($response);
+        }
+
         if ($response->getBody()->getSize() > 0) {
             /** @var ApiErrorResponse $apiErrorResponse */
             $apiErrorResponse = $this->serializer->deserialize(
