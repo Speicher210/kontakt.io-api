@@ -3,12 +3,13 @@
 namespace Speicher210\KontaktIO;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Exception\ClientException;
 use Speicher210\KontaktIO\Exception\ApiKeyExtractionInvalidCredentialsException;
 
 /**
- * Get the API key using username and password.
+ * Helper functions around the API key.
  */
-class ApiKeyExtractor
+class ApiKeyHelper
 {
     /**
      * Get the API key using a username and password combination.
@@ -37,5 +38,22 @@ class ApiKeyExtractor
         }
 
         return (string)$response->getBody();
+    }
+
+    public static function apiKeyIsValid($apiKey)
+    {
+        $client = new Client($apiKey);
+
+        try {
+            $client->get('/manager/me');
+
+            return true;
+        } catch (ClientException $e) {
+            if ($e->getResponse()->getStatusCode() === 401) {
+                return false;
+            }
+
+            throw $e;
+        }
     }
 }
