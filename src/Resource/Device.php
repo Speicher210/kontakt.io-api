@@ -15,7 +15,7 @@ class Device extends AbstractResource
      * Get a device.
      *
      * @param string $uniqueId The device unique ID.
-     * @return Device
+     * @return DeviceModel
      */
     public function getDevice($uniqueId)
     {
