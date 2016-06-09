@@ -21,6 +21,8 @@ class UpdateTest extends AbstractResourceTest
     {
         $deviceUniqueId = 'abc1';
         $deviceType = DeviceModel::DEVICE_TYPE_BEACON;
+        $major = 123;
+        $minor = 456;
 
         $clientMock = $this->getClientMock(array('post'));
         $responseMock = $this->getClientResponseMock('Update successful.', 200);
@@ -36,11 +38,15 @@ class UpdateTest extends AbstractResourceTest
                         $this->assertSame('application/x-www-form-urlencoded', $values['headers']['Content-Type']);
 
                         $this->assertArrayHasKey('form_params', $values);
-                        $this->assertArrayHasKey('uniqueId', $values['form_params']);
-                        $this->assertArrayHasKey('deviceType', $values['form_params']);
+                        $expectedFormParams = array(
+                            'uniqueId' => 'abc1',
+                            'deviceType' => 'BEACON',
+                            'major' => 123,
+                            'minor' => 456,
+                            'alias' => 'alias value',
+                        );
 
-                        $this->assertEquals($deviceUniqueId, $values['form_params']['uniqueId']);
-                        $this->assertEquals($deviceType, $values['form_params']['deviceType']);
+                        $this->assertSame($expectedFormParams, $values['form_params']);
 
                         return true;
                     }
@@ -50,11 +56,12 @@ class UpdateTest extends AbstractResourceTest
 
         /** @var Device $resource */
         $resource = $this->getResourceToTest($clientMock);
-        $values = array(
-            'uniqueId' => 'gets overwritten from method argument',
-            'deviceType' => 'also gets overwritten from method argument',
-            'alias' => 'alias value',
-        );
+        $values = new DeviceModel();
+        $values->setUniqueId('uniqueId'); // gets overwritten from method argument
+        $values->setDeviceType('deviceType'); // gets overwritten from method argument
+        $values->setAlias('alias value');
+        $values->setMajor($major);
+        $values->setMinor($minor);
         $actual = $resource->update($deviceUniqueId, $deviceType, $values);
 
         $this->assertTrue($actual);

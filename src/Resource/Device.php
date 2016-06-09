@@ -33,11 +33,14 @@ class Device extends AbstractResource
      *
      * @param string|array $uniqueId The unique IDs to update.
      * @param string $deviceType The device type. One of the DEVICE_TYPE_* Device model constants.
-     * @param array $values The values for the device(s).
+     * @param DeviceModel $values The values for the device(s).
      * @return boolean
      */
-    public function update($uniqueId, $deviceType, array $values)
+    public function update($uniqueId, $deviceType, DeviceModel $values)
     {
+        $jsonSerialized = $this->serializer->serialize($values, 'json');
+        $values = \GuzzleHttp\json_decode($jsonSerialized, true);
+
         $values['uniqueId'] = implode(',', (array)$uniqueId);
         $values['deviceType'] = $deviceType;
 
