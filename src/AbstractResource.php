@@ -44,12 +44,13 @@ class AbstractResource
      *
      * @param ClientException $e The client exception.
      * @return ApiException
+     * @throws \Speicher210\KontaktIO\Exception\ApiKeyInvalidException
      */
     protected function createApiException(ClientException $e)
     {
         $response = $e->getResponse();
 
-        if ($response->getStatusCode() === 401 || $response->getStatusCode() === 403) {
+        if (in_array($response->getStatusCode(), array(401, 403), true)) {
             throw new ApiKeyInvalidException($response);
         }
 

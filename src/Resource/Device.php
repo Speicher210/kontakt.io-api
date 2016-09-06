@@ -16,11 +16,12 @@ class Device extends AbstractResource
      *
      * @param string $uniqueId The device unique ID.
      * @return DeviceModel
+     * @throws \Speicher210\KontaktIO\Exception\ApiException
      */
     public function getDevice($uniqueId)
     {
         try {
-            $response = $this->client->get('/device/'.$uniqueId);
+            $response = $this->client->get('/device/' . $uniqueId);
 
             return $this->serializer->deserialize($response->getBody(), DeviceModel::class, 'json');
         } catch (ClientException $e) {
@@ -35,6 +36,7 @@ class Device extends AbstractResource
      * @param string $deviceType The device type. One of the DEVICE_TYPE_* Device model constants.
      * @param DeviceModel $values The values for the device(s).
      * @return boolean
+     * @throws \Speicher210\KontaktIO\Exception\ApiException
      */
     public function update($uniqueId, $deviceType, DeviceModel $values)
     {
@@ -55,7 +57,7 @@ class Device extends AbstractResource
                 ]
             );
 
-            return $response->getStatusCode() == 200;
+            return $response->getStatusCode() === 200;
         } catch (ClientException $e) {
             throw $this->createApiException($e);
         }

@@ -22,9 +22,9 @@ class Client extends \GuzzleHttp\Client
             [
                 'base_uri' => 'https://api.kontakt.io',
                 'headers' => [
-                    'Accept' => 'application/vnd.com.kontakt+json;version='.$version,
+                    'Accept' => 'application/vnd.com.kontakt+json;version=' . $version,
                     'Api-Key' => $apiKey,
-                    'User-Agent' => 'Speicher210/KontaktIO '.default_user_agent(),
+                    'User-Agent' => 'Speicher210/KontaktIO ' . default_user_agent(),
                 ],
             ]
         );

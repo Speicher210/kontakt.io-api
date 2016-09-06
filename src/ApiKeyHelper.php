@@ -17,6 +17,7 @@ class ApiKeyHelper
      * @param string $username The username.
      * @param string $password The password.
      * @return string
+     * @throws \Speicher210\KontaktIO\Exception\ApiKeyExtractionInvalidCredentialsException
      */
     public function getApiKey($username, $password)
     {

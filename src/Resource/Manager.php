@@ -16,11 +16,12 @@ class Manager extends AbstractResource
      *
      * @param string $id The manager UUID.
      * @return ManagerModel
+     * @throws \Speicher210\KontaktIO\Exception\ApiException
      */
     public function getManager($id)
     {
         try {
-            $response = $this->client->get('/manager/'.$id);
+            $response = $this->client->get('/manager/' . $id);
 
             return $this->serializer->deserialize($response->getBody(), ManagerModel::class, 'json');
         } catch (ClientException $e) {
@@ -32,6 +33,7 @@ class Manager extends AbstractResource
      * Get the manager for the user owing the API key.
      *
      * @return ManagerModel
+     * @throws \Speicher210\KontaktIO\Exception\ApiException
      */
     public function getMyManager()
     {
