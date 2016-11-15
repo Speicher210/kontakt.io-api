@@ -38,7 +38,9 @@ class ApiKeyHelper
             throw new ApiKeyExtractionInvalidCredentialsException();
         }
 
-        return (string)$response->getBody();
+        $response = json_decode($response->getBody(), true);
+
+        return $response['apiKey'];
     }
 
     public function apiKeyIsValid($apiKey)
