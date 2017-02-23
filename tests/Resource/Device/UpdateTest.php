@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO\Test\Resource\Device;
 
 use Speicher210\KontaktIO\Model\Device as DeviceModel;
@@ -12,7 +14,7 @@ class UpdateTest extends AbstractResourceTest
     /**
      * {@inheritdoc}
      */
-    protected function getClassUnderTest()
+    protected function getClassUnderTest(): string
     {
         return Device::class;
     }
@@ -24,7 +26,7 @@ class UpdateTest extends AbstractResourceTest
         $major = 123;
         $minor = 456;
 
-        $clientMock = $this->getClientMock(array('post'));
+        $clientMock = $this->getClientMock(['post']);
         $responseMock = $this->getClientResponseMock('Update successful.', 200);
         $clientMock
             ->expects($this->once())
@@ -38,13 +40,14 @@ class UpdateTest extends AbstractResourceTest
                         $this->assertSame('application/x-www-form-urlencoded', $values['headers']['Content-Type']);
 
                         $this->assertArrayHasKey('form_params', $values);
-                        $expectedFormParams = array(
+                        $expectedFormParams = [
+                            'id' => '',
                             'uniqueId' => 'abc1',
                             'deviceType' => 'BEACON',
                             'major' => 123,
                             'minor' => 456,
-                            'alias' => 'alias value',
-                        );
+                            'alias' => 'alias value'
+                        ];
 
                         $this->assertSame($expectedFormParams, $values['form_params']);
 
@@ -56,8 +59,7 @@ class UpdateTest extends AbstractResourceTest
 
         /** @var Device $resource */
         $resource = $this->getResourceToTest($clientMock);
-        $values = new DeviceModel();
-        $values->setUniqueId('uniqueId'); // gets overwritten from method argument
+        $values = new DeviceModel('', 'uniqueId'); // values get overwritten from method argument
         $values->setDeviceType('deviceType'); // gets overwritten from method argument
         $values->setAlias('alias value');
         $values->setMajor($major);

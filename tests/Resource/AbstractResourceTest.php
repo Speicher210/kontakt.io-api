@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO\Test\Resource;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
@@ -27,7 +29,7 @@ abstract class AbstractResourceTest extends TestCase
     public static function setUpBeforeClass()
     {
         if (self::$serializerTempDirectory === null) {
-            self::$serializerTempDirectory = sys_get_temp_dir() . '/' . uniqid('sp210_kontakio_api_test', true);
+            self::$serializerTempDirectory = \sys_get_temp_dir() . '/' . \uniqid('sp210_kontakio_api_test', true);
         }
     }
 
@@ -36,7 +38,7 @@ abstract class AbstractResourceTest extends TestCase
      *
      * @return string
      */
-    abstract protected function getClassUnderTest();
+    abstract protected function getClassUnderTest(): string;
 
     /**
      * Get a client mock.
@@ -64,7 +66,7 @@ abstract class AbstractResourceTest extends TestCase
     {
         $mock = $this
             ->getMockBuilder(ResponseInterface::class)
-            ->setMethods(array('getBody', 'getStatusCode'))
+            ->setMethods(['getBody', 'getStatusCode'])
             ->getMockForAbstractClass();
 
         $mock->expects($this->any())->method('getBody')->with()->willReturn($body);
@@ -98,8 +100,8 @@ abstract class AbstractResourceTest extends TestCase
     protected function getTestFixture($suffix)
     {
         $reflection = new \ReflectionObject($this);
-        $fixturesDirectory = dirname($reflection->getFileName()) . '/Fixtures/';
+        $fixturesDirectory = \dirname($reflection->getFileName()) . '/Fixtures/';
 
-        return file_get_contents($fixturesDirectory . $this->getName() . $suffix);
+        return \file_get_contents($fixturesDirectory . $this->getName() . $suffix);
     }
 }

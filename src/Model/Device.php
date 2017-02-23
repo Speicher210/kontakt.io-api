@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO\Model;
 
 use JMS\Serializer\Annotation as JMS;
@@ -7,31 +9,51 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Model representing a device.
  */
-class Device
+final class Device
 {
-    const PROXIMITY_IMMEDIATE = 'IMMEDIATE';
-    const PROXIMITY_NEAR = 'NEAR';
-    const PROXIMITY_FAR = 'FAR';
+    public const PROXIMITY_IMMEDIATE = 'IMMEDIATE';
+    public const PROXIMITY_NEAR = 'NEAR';
+    public const PROXIMITY_FAR = 'FAR';
 
-    const DEVICE_TYPE_BEACON = 'BEACON';
-    const DEVICE_TYPE_CLOUD_BEACON = 'CLOUD_BEACON';
+    public const DEVICE_TYPE_BEACON = 'BEACON';
+    public const DEVICE_TYPE_CLOUD_BEACON = 'CLOUD_BEACON';
 
-    const PROFILE_IBEACON = 'IBEACON';
-    const PROFILE_EDDYSTONE = 'EDDYSTONE';
+    public const PROFILE_IBEACON = 'IBEACON';
+    public const PROFILE_EDDYSTONE = 'EDDYSTONE';
 
-    const SPECIFICATION_STANDARD = 'STANDARD';
-    const SPECIFICATION_SENSOR = 'SENSOR';
-    const SPECIFICATION_TOUGH = 'TOUGH';
+    public const SPECIFICATION_STANDARD = 'STANDARD';
+    public const SPECIFICATION_SENSOR = 'SENSOR';
+    public const SPECIFICATION_TOUGH = 'TOUGH';
+
+    public const MODEL_CARD_BEACON = 'CARD_BEACON';
+    public const MODEL_CLOUD_BEACON = 'CLOUD_BEACON';
+    public const MODEL_EXTERNAL = 'EXTERNAL';
+    public const MODEL_GATEWAY = 'GATEWAY';
+    public const MODEL_SENSOR_BEACON = 'SENSOR_BEACON';
+    public const MODEL_SMART_BEACON = 'SMART_BEACON';
+    public const MODEL_USB_BEACON = 'USB_BEACON';
+
+    /**
+     * @param string $id Device ID.
+     * @param string $uniqueId Device unique ID.
+     */
+    public function __construct(string $id, string $uniqueId)
+    {
+        $this->id = $id;
+        $this->uniqueId = $uniqueId;
+    }
 
     /**
      * Device ID.
+     *
+     * This is an UUID.
      *
      * @var string
      *
      * @JMS\Type("string")
      * @JMS\SerializedName("id")
      */
-    protected $id;
+    private $id;
 
     /**
      * Device unique ID.
@@ -41,7 +63,7 @@ class Device
      * @JMS\Type("string")
      * @JMS\SerializedName("uniqueId")
      */
-    protected $uniqueId;
+    private $uniqueId;
 
     /**
      * Eddystone namespace.
@@ -51,17 +73,17 @@ class Device
      * @JMS\Type("string")
      * @JMS\SerializedName("namespace")
      */
-    protected $namespace;
+    private $namespace;
 
     /**
-     * Eddystone Id.
+     * Eddystone ID.
      *
      * @var string
      *
      * @JMS\Type("string")
      * @JMS\SerializedName("instanceId")
      */
-    protected $instanceId;
+    private $instanceId;
 
     /**
      * Device type.
@@ -71,7 +93,7 @@ class Device
      * @JMS\Type("string")
      * @JMS\SerializedName("deviceType")
      */
-    protected $deviceType;
+    private $deviceType;
 
     /**
      * Specification.
@@ -81,17 +103,19 @@ class Device
      * @JMS\Type("string")
      * @JMS\SerializedName("specification")
      */
-    protected $specification;
+    private $specification;
 
     /**
      * Proximity UUID.
+     *
+     * The UUID of the device.
      *
      * @var string
      *
      * @JMS\Type("string")
      * @JMS\SerializedName("proximity")
      */
-    protected $proximity;
+    private $proximity;
 
     /**
      * Major.
@@ -101,7 +125,7 @@ class Device
      * @JMS\Type("integer")
      * @JMS\SerializedName("major")
      */
-    protected $major;
+    private $major;
 
     /**
      * Minor.
@@ -111,7 +135,7 @@ class Device
      * @JMS\Type("integer")
      * @JMS\SerializedName("minor")
      */
-    protected $minor;
+    private $minor;
 
     /**
      * Device name.
@@ -121,7 +145,7 @@ class Device
      * @JMS\Type("string")
      * @JMS\SerializedName("name")
      */
-    protected $name;
+    private $name;
 
     /**
      * Device alias.
@@ -131,7 +155,17 @@ class Device
      * @JMS\Type("string")
      * @JMS\SerializedName("alias")
      */
-    protected $alias;
+    private $alias;
+
+    /**
+     * The model.
+     *
+     * @var string
+     *
+     * @JMS\Type("string")
+     * @JMS\SerializedName("model")
+     */
+    private $model;
 
     /**
      * Advertising interval range (20 - 10240 milliseconds).
@@ -141,7 +175,7 @@ class Device
      * @JMS\Type("integer")
      * @JMS\SerializedName("interval")
      */
-    protected $interval;
+    private $interval;
 
     /**
      * Transmission power (0 - 7).
@@ -151,7 +185,7 @@ class Device
      * @JMS\Type("integer")
      * @JMS\SerializedName("txPower")
      */
-    protected $txPower;
+    private $txPower;
 
     /**
      * Device URL.
@@ -161,7 +195,17 @@ class Device
      * @JMS\Type("string")
      * @JMS\SerializedName("url")
      */
-    protected $url;
+    private $url;
+
+    /**
+     * Firmware version of the device
+     *
+     * @var string
+     *
+     * @JMS\Type("string")
+     * @JMS\SerializedName("firmware")
+     */
+    private $firmware;
 
     /**
      * Device profile.
@@ -171,29 +215,16 @@ class Device
      * @JMS\Type("array")
      * @JMS\SerializedName("profiles")
      */
-    protected $profiles;
+    private $profiles;
 
     /**
      * Get the ID.
      *
      * @return string
      */
-    public function getId()
+    public function id()
     {
         return $this->id;
-    }
-
-    /**
-     * Set the ID.
-     *
-     * @param string $id The ID.
-     * @return Device
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -201,22 +232,9 @@ class Device
      *
      * @return string
      */
-    public function getUniqueId()
+    public function uniqueId()
     {
         return $this->uniqueId;
-    }
-
-    /**
-     * Set the unique ID.
-     *
-     * @param string $uniqueId The unique ID.
-     * @return Device
-     */
-    public function setUniqueId($uniqueId)
-    {
-        $this->uniqueId = $uniqueId;
-
-        return $this;
     }
 
     /**
@@ -224,7 +242,7 @@ class Device
      *
      * @return string
      */
-    public function getNamespace()
+    public function namespace()
     {
         return $this->namespace;
     }
@@ -247,7 +265,7 @@ class Device
      *
      * @return string
      */
-    public function getInstanceId()
+    public function instanceId()
     {
         return $this->instanceId;
     }
@@ -270,7 +288,7 @@ class Device
      *
      * @return string
      */
-    public function getDeviceType()
+    public function deviceType()
     {
         return $this->deviceType;
     }
@@ -293,7 +311,7 @@ class Device
      *
      * @return string
      */
-    public function getSpecification()
+    public function specification()
     {
         return $this->specification;
     }
@@ -316,7 +334,7 @@ class Device
      *
      * @return string
      */
-    public function getProximity()
+    public function proximity(): string
     {
         return $this->proximity;
     }
@@ -327,7 +345,7 @@ class Device
      * @param string $proximity The proximity UUID.
      * @return Device
      */
-    public function setProximity($proximity)
+    public function setProximity(string $proximity)
     {
         $this->proximity = $proximity;
 
@@ -339,7 +357,7 @@ class Device
      *
      * @return integer
      */
-    public function getMajor()
+    public function major(): int
     {
         return $this->major;
     }
@@ -350,7 +368,7 @@ class Device
      * @param integer $major The major.
      * @return Device
      */
-    public function setMajor($major)
+    public function setMajor(int $major)
     {
         $this->major = $major;
 
@@ -362,7 +380,7 @@ class Device
      *
      * @return integer
      */
-    public function getMinor()
+    public function minor(): int
     {
         return $this->minor;
     }
@@ -373,7 +391,7 @@ class Device
      * @param integer $minor The minor.
      * @return Device
      */
-    public function setMinor($minor)
+    public function setMinor(int $minor)
     {
         $this->minor = $minor;
 
@@ -385,7 +403,7 @@ class Device
      *
      * @return string
      */
-    public function getName()
+    public function name(): string
     {
         return $this->name;
     }
@@ -408,7 +426,7 @@ class Device
      *
      * @return string
      */
-    public function getAlias()
+    public function alias(): ?string
     {
         return $this->alias;
     }
@@ -419,10 +437,32 @@ class Device
      * @param string $alias The alias.
      * @return Device
      */
-    public function setAlias($alias)
+    public function setAlias(?string $alias)
     {
         $this->alias = $alias;
 
+        return $this;
+    }
+
+    /**
+     * Get the model.
+     *
+     * @return string
+     */
+    public function model(): string
+    {
+        return $this->model;
+    }
+
+    /**
+     * Set the model.
+     *
+     * @param string $model
+     * @return Device
+     */
+    public function setModel(string $model): Device
+    {
+        $this->model = $model;
         return $this;
     }
 
@@ -431,7 +471,7 @@ class Device
      *
      * @return integer
      */
-    public function getInterval()
+    public function interval(): int
     {
         return $this->interval;
     }
@@ -442,7 +482,7 @@ class Device
      * @param integer $interval The interval in milliseconds.
      * @return Device
      */
-    public function setInterval($interval)
+    public function setInterval(int $interval)
     {
         $this->interval = $interval;
 
@@ -454,7 +494,7 @@ class Device
      *
      * @return integer
      */
-    public function getTxPower()
+    public function txPower(): int
     {
         return $this->txPower;
     }
@@ -477,7 +517,7 @@ class Device
      *
      * @return string
      */
-    public function getUrl()
+    public function url(): ?string
     {
         return $this->url;
     }
@@ -488,10 +528,32 @@ class Device
      * @param string $url The URL.
      * @return Device
      */
-    public function setUrl($url)
+    public function setUrl(?string $url)
     {
         $this->url = $url;
 
+        return $this;
+    }
+
+    /**
+     * Get the firmware version.
+     *
+     * @return string
+     */
+    public function firmware(): ?string
+    {
+        return $this->firmware;
+    }
+
+    /**
+     * Set the firmware.
+     *
+     * @param string $firmware
+     * @return Device
+     */
+    public function setFirmware(string $firmware)
+    {
+        $this->firmware = $firmware;
         return $this;
     }
 
@@ -500,7 +562,7 @@ class Device
      *
      * @return array
      */
-    public function getProfiles()
+    public function profiles(): ?array
     {
         return $this->profiles;
     }
@@ -511,7 +573,7 @@ class Device
      * @param array|null $profiles
      * @return Device
      */
-    public function setProfiles(array $profiles = null)
+    public function setProfiles(?array $profiles)
     {
         $this->profiles = $profiles;
 

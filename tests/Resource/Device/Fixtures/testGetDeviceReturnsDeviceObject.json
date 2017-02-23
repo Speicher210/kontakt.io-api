@@ -5,26 +5,27 @@
   "minor": 520,
   "shares": [],
   "txPower": 3,
-  "instanceId": "instanceid1",
+  "instanceId": "instanceId1",
   "major": 1,
   "actionsCount": 0,
   "alias": null,
+  "model": "SMART_BEACON",
   "id": "cf0de0d0-fcee-4400-9e7e-b5ed6f54e7ae",
   "firmware": "3.1",
-  "lat": null,
   "deviceType": "BEACON",
-  "browserActions": [],
   "profiles": [
     "IBEACON"
   ],
   "specification": "STANDARD",
-  "contentActions": [],
   "managerId": "005d20d2-243e-47c3-8c50-f2de8e15eef3",
   "url": "a2e140b6f827459d9cd777649eff320e",
   "proximity": "aa6455d4-d9c5-4b45-9d4e-57b8853c417c",
+  "futureId": {
+    "EDDYSTONE": [],
+    "IBEACON": []
+  },
   "name": "sp210",
   "namespace": "namespace1",
   "interval": 350.0,
-  "uniqueId": "abc1",
-  "status": null
+  "uniqueId": "abc1"
 }
