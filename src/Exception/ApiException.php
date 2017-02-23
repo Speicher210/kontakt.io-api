@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO\Exception;
 
 use Speicher210\KontaktIO\Model\ApiErrorResponse;
@@ -14,11 +16,9 @@ class ApiException extends \RuntimeException
      *
      * @var ApiErrorResponse
      */
-    protected $apiErrorResponse;
+    private $apiErrorResponse;
 
     /**
-     * Constructor.
-     *
      * @param ApiErrorResponse $apiErrorResponse The API error response.
      * @param \Exception|null $previous Previous exception.
      */
@@ -34,7 +34,7 @@ class ApiException extends \RuntimeException
      *
      * @return ApiErrorResponse
      */
-    public function getApiErrorResponse()
+    public function apiErrorResponse(): ApiErrorResponse
     {
         return $this->apiErrorResponse;
     }

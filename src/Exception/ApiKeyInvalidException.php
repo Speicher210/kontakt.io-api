@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO\Exception;
 
 use Psr\Http\Message\ResponseInterface;
@@ -8,19 +10,18 @@ use Speicher210\KontaktIO\Model\ApiErrorResponse;
 /**
  * Exception thrown whe the API key is not valid or not having enough permissions.
  */
-class ApiKeyInvalidException extends ApiException
+final class ApiKeyInvalidException extends ApiException
 {
     /**
-     * Constructor.
-     *
      * @param ResponseInterface $response The API response.
+     * @return ApiKeyInvalidException
      */
-    public function __construct(ResponseInterface $response)
+    public static function forResponse(ResponseInterface $response): ApiKeyInvalidException
     {
         $apiErrorResponse = new ApiErrorResponse();
         $apiErrorResponse->setStatus($response->getStatusCode());
         $apiErrorResponse->setMessage($response->getReasonPhrase());
 
-        parent::__construct($apiErrorResponse);
+        return new static($apiErrorResponse);
     }
 }

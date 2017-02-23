@@ -51,7 +51,7 @@ class AbstractResource
         $response = $e->getResponse();
 
         if (in_array($response->getStatusCode(), array(401, 403), true)) {
-            throw new ApiKeyInvalidException($response);
+            throw ApiKeyInvalidException::forResponse($response);
         }
 
         if ($response->getBody()->getSize() > 0) {
