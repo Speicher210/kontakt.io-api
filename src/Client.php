@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO;
 
 use function GuzzleHttp\default_user_agent;
 
 class Client extends \GuzzleHttp\Client
 {
-    const API_VERSION_STABLE = '7';
+    public const API_VERSION_STABLE = '9';
 
-    const API_VERSION_LATEST = '8';
+    public const API_VERSION_LATEST = '10';
 
     /**
-     * Constructor.
-     *
      * @param string $apiKey
      * @param string $version
      */
@@ -24,8 +24,8 @@ class Client extends \GuzzleHttp\Client
                 'headers' => [
                     'Accept' => 'application/vnd.com.kontakt+json;version=' . $version,
                     'Api-Key' => $apiKey,
-                    'User-Agent' => 'Speicher210/KontaktIO ' . default_user_agent(),
-                ],
+                    'User-Agent' => 'Speicher210/KontaktIO ' . default_user_agent()
+                ]
             ]
         );
     }
