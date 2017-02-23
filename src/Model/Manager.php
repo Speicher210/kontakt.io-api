@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO\Model;
 
 use JMS\Serializer\Annotation as JMS;
@@ -7,7 +9,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Model representing a manager.
  */
-class Manager
+final class Manager
 {
     const ROLE_SUPERUSER = 'SUPERUSER';
     const ROLE_ADMIN = 'ADMIN';
@@ -21,7 +23,7 @@ class Manager
      * @JMS\Type("string")
      * @JMS\SerializedName("id")
      */
-    protected $id;
+    private $id;
 
     /**
      * The manager unique ID.
@@ -31,7 +33,7 @@ class Manager
      * @JMS\Type("string")
      * @JMS\SerializedName("uniqueId")
      */
-    protected $uniqueId;
+    private $uniqueId;
 
     /**
      * First name.
@@ -41,7 +43,7 @@ class Manager
      * @JMS\Type("string")
      * @JMS\SerializedName("firstName")
      */
-    protected $firstName;
+    private $firstName;
 
     /**
      * Last name.
@@ -51,17 +53,7 @@ class Manager
      * @JMS\Type("string")
      * @JMS\SerializedName("lastName")
      */
-    protected $lastName;
-
-    /**
-     * Manager role. One of the ROLE_* constants.
-     *
-     * @var string
-     *
-     * @JMS\Type("string")
-     * @JMS\SerializedName("role")
-     */
-    protected $role;
+    private $lastName;
 
     /**
      * Email address.
@@ -71,14 +63,24 @@ class Manager
      * @JMS\Type("string")
      * @JMS\SerializedName("email")
      */
-    protected $email;
+    private $email;
+
+    /**
+     * Manager role. One of the ROLE_* constants.
+     *
+     * @var string
+     *
+     * @JMS\Type("string")
+     * @JMS\SerializedName("role")
+     */
+    private $role;
 
     /**
      * Get the ID.
      *
      * @return string
      */
-    public function getId()
+    public function id()
     {
         return $this->id;
     }
@@ -101,7 +103,7 @@ class Manager
      *
      * @return string
      */
-    public function getUniqueId()
+    public function uniqueId()
     {
         return $this->uniqueId;
     }
@@ -124,7 +126,7 @@ class Manager
      *
      * @return string
      */
-    public function getFirstName()
+    public function firstName()
     {
         return $this->firstName;
     }
@@ -147,7 +149,7 @@ class Manager
      *
      * @return string
      */
-    public function getLastName()
+    public function lastName()
     {
         return $this->lastName;
     }
@@ -170,7 +172,7 @@ class Manager
      *
      * @return string
      */
-    public function getRole()
+    public function role()
     {
         return $this->role;
     }
@@ -193,7 +195,7 @@ class Manager
      *
      * @return string
      */
-    public function getEmail()
+    public function email()
     {
         return $this->email;
     }

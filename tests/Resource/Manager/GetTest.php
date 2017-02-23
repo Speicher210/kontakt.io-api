@@ -25,7 +25,7 @@ class GetTest extends AbstractResourceTest
         $clientMock = $this->getClientMock(['get']);
         $responseMock = $this->getClientResponseMock($this->getTestFixture('.json'));
         $clientMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('get')
             ->with('/manager/' . $managerId)
             ->willReturn($responseMock);
@@ -43,20 +43,16 @@ class GetTest extends AbstractResourceTest
             ->setEmail('test@email.com')
             ->setRole(ManagerModel::ROLE_SUPERUSER);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testGetMyManager()
     {
         $manager = new ManagerModel();
-        $resourceMock = $this
-            ->getMockBuilder(Manager::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getManager'])
-            ->getMock();
 
-        $resourceMock->expects($this->once())->method('getManager')->with('me')->willReturn($manager);
+        $resourceMock = $this->createPartialMock(Manager::class, ['getManager']);
+        $resourceMock->expects(self::once())->method('getManager')->with('me')->willReturn($manager);
 
-        $this->assertSame($manager, $resourceMock->getMyManager());
+        self::assertSame($manager, $resourceMock->getMyManager());
     }
 }
