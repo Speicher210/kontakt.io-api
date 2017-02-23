@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO;
 
 use GuzzleHttp\Exception\ClientException;
@@ -50,7 +52,7 @@ class AbstractResource
     {
         $response = $e->getResponse();
 
-        if (in_array($response->getStatusCode(), array(401, 403), true)) {
+        if (\in_array($response->getStatusCode(), [401, 403], true)) {
             throw ApiKeyInvalidException::forResponse($response);
         }
 

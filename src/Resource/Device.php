@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO\Resource;
 
 use GuzzleHttp\Exception\ClientException;
@@ -43,7 +45,7 @@ class Device extends AbstractResource
         $jsonSerialized = $this->serializer->serialize($values, 'json');
         $values = \GuzzleHttp\json_decode($jsonSerialized, true);
 
-        $values['uniqueId'] = implode(',', (array)$uniqueId);
+        $values['uniqueId'] = \implode(',', (array)$uniqueId);
         $values['deviceType'] = $deviceType;
 
         try {
@@ -52,8 +54,8 @@ class Device extends AbstractResource
                 [
                     'form_params' => $values,
                     'headers' => [
-                        'Content-Type' => 'application/x-www-form-urlencoded',
-                    ],
+                        'Content-Type' => 'application/x-www-form-urlencoded'
+                    ]
                 ]
             );
 

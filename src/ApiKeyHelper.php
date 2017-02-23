@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Speicher210\KontaktIO;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
@@ -27,8 +29,8 @@ class ApiKeyHelper
             [
                 'form_params' => [
                     'username' => $username,
-                    'password' => $password,
-                ],
+                    'password' => $password
+                ]
             ]
         );
 
@@ -38,12 +40,18 @@ class ApiKeyHelper
             throw new ApiKeyExtractionInvalidCredentialsException();
         }
 
-        $response = json_decode($response->getBody(), true);
+        $response = \json_decode($response->getBody(), true);
 
         return $response['apiKey'];
     }
 
-    public function apiKeyIsValid($apiKey)
+    /**
+     * Check if an API key is valid.
+     *
+     * @param string $apiKey The API key to check.
+     * @return bool
+     */
+    public function apiKeyIsValid(string $apiKey): bool
     {
         $client = new Client($apiKey);
 
