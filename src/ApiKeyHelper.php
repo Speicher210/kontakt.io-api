@@ -40,7 +40,7 @@ class ApiKeyHelper
             throw new ApiKeyExtractionInvalidCredentialsException();
         }
 
-        $response = \json_decode($response->getBody(), true);
+        $response = \json_decode($response->getBody()->getContents(), true);
 
         return $response['apiKey'];
     }
