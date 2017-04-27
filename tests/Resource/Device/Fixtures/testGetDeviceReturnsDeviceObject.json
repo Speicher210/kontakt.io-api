@@ -2,30 +2,40 @@
   "venue": null,
   "metadata": null,
   "access": "OWNER",
-  "minor": 520,
+  "minor": 1554,
+  "mac": "UNKNOWN",
+  "packets": [
+    "IBEACON"
+  ],
   "shares": [],
-  "txPower": 3,
-  "instanceId": "instanceId1",
-  "major": 1,
+  "txPower": 5,
+  "instanceId": "316d4d77696f",
+  "major": 4516,
   "actionsCount": 0,
   "alias": null,
   "model": "SMART_BEACON",
-  "id": "cf0de0d0-fcee-4400-9e7e-b5ed6f54e7ae",
-  "firmware": "3.1",
+  "id": "b6128ce9-acae-4898-952b-2bbf7136635f",
+  "firmware": "4.1",
+  "lat": null,
   "deviceType": "BEACON",
+  "lng": null,
+  "shuffled": false,
   "profiles": [
     "IBEACON"
   ],
   "specification": "STANDARD",
-  "managerId": "005d20d2-243e-47c3-8c50-f2de8e15eef3",
-  "url": "a2e140b6f827459d9cd777649eff320e",
-  "proximity": "aa6455d4-d9c5-4b45-9d4e-57b8853c417c",
+  "managerId": "1e2d66d0-3316-4ebd-84d6-b3facf5b06f4",
+  "url": "026b6f6e74616b742e696f",
+  "secureNamespace": "f7826da6bc5b71e0893e",
+  "secureProximity": "f7826da6-4fa2-4e98-8024-bc5b71e0893e",
+  "proximity": "f7826da6-4fa2-4e98-8024-bc5b71e0893e",
   "futureId": {
     "EDDYSTONE": [],
     "IBEACON": []
   },
-  "name": "sp210",
-  "namespace": "namespace1",
-  "interval": 350.0,
-  "uniqueId": "abc1"
+  "name": "Beacon",
+  "namespace": "f7826da6bc5b71e0893e",
+  "interval": 100,
+  "queriedBy": "1mMw",
+  "uniqueId": "1mMw"
 }

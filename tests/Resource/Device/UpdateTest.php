@@ -10,7 +10,6 @@ use Speicher210\KontaktIO\Test\Resource\AbstractResourceTest;
 
 class UpdateTest extends AbstractResourceTest
 {
-
     /**
      * {@inheritdoc}
      */
@@ -19,7 +18,7 @@ class UpdateTest extends AbstractResourceTest
         return Device::class;
     }
 
-    public function testUpdateDevice()
+    public function testUpdateDevice(): void
     {
         $deviceUniqueId = 'abc1';
         $deviceType = DeviceModel::DEVICE_TYPE_BEACON;
@@ -29,17 +28,17 @@ class UpdateTest extends AbstractResourceTest
         $clientMock = $this->getClientMock(['post']);
         $responseMock = $this->getClientResponseMock('Update successful.', 200);
         $clientMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('post')
             ->with(
                 '/device/update',
-                $this->callback(
-                    function ($values) use ($deviceUniqueId, $deviceType) {
-                        $this->assertArrayHasKey('headers', $values);
-                        $this->assertArrayHasKey('Content-Type', $values['headers']);
-                        $this->assertSame('application/x-www-form-urlencoded', $values['headers']['Content-Type']);
+                self::callback(
+                    function ($values) {
+                        self::assertArrayHasKey('headers', $values);
+                        self::assertArrayHasKey('Content-Type', $values['headers']);
+                        self::assertSame('application/x-www-form-urlencoded', $values['headers']['Content-Type']);
 
-                        $this->assertArrayHasKey('form_params', $values);
+                        self::assertArrayHasKey('form_params', $values);
                         $expectedFormParams = [
                             'id' => '',
                             'uniqueId' => 'abc1',
@@ -49,7 +48,7 @@ class UpdateTest extends AbstractResourceTest
                             'alias' => 'alias value'
                         ];
 
-                        $this->assertSame($expectedFormParams, $values['form_params']);
+                        self::assertSame($expectedFormParams, $values['form_params']);
 
                         return true;
                     }
@@ -66,6 +65,6 @@ class UpdateTest extends AbstractResourceTest
         $values->setMinor($minor);
         $actual = $resource->update($deviceUniqueId, $deviceType, $values);
 
-        $this->assertTrue($actual);
+        self::assertTrue($actual);
     }
 }

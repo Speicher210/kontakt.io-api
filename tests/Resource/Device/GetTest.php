@@ -20,7 +20,7 @@ class GetTest extends AbstractResourceTest
 
     public function testGetDeviceReturnsDeviceObject(): void
     {
-        $deviceUniqueId = 'abc1';
+        $deviceUniqueId = '1mMw';
 
         $clientMock = $this->getClientMock(['get']);
         $responseMock = $this->getClientResponseMock($this->getTestFixture('.json'));
@@ -34,21 +34,21 @@ class GetTest extends AbstractResourceTest
         $resource = $this->getResourceToTest($clientMock);
         $actual = $resource->getDevice($deviceUniqueId);
 
-        $expected = new DeviceModel('cf0de0d0-fcee-4400-9e7e-b5ed6f54e7ae', $deviceUniqueId);
+        $expected = new DeviceModel('b6128ce9-acae-4898-952b-2bbf7136635f', $deviceUniqueId);
         $expected
-            ->setNamespace('namespace1')
-            ->setInstanceId('instanceId1')
+            ->setNamespace('f7826da6bc5b71e0893e')
+            ->setInstanceId('316d4d77696f')
             ->setDeviceType(DeviceModel::DEVICE_TYPE_BEACON)
             ->setSpecification(DeviceModel::SPECIFICATION_STANDARD)
-            ->setProximity('aa6455d4-d9c5-4b45-9d4e-57b8853c417c')
-            ->setMajor(1)
-            ->setMinor(520)
-            ->setName('sp210')
+            ->setProximity('f7826da6-4fa2-4e98-8024-bc5b71e0893e')
+            ->setMajor(4516)
+            ->setMinor(1554)
+            ->setName('Beacon')
             ->setModel(DeviceModel::MODEL_SMART_BEACON)
-            ->setInterval(350)
-            ->setTxPower(3)
-            ->setUrl('a2e140b6f827459d9cd777649eff320e')
-            ->setFirmware('3.1')
+            ->setInterval(100)
+            ->setTxPower(5)
+            ->setUrl('026b6f6e74616b742e696f')
+            ->setFirmware('4.1')
             ->setProfiles([DeviceModel::PROFILE_IBEACON]);
 
         self::assertEquals($expected, $actual);
