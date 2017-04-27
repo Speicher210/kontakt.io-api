@@ -20,7 +20,7 @@ class Manager extends AbstractResource
      * @return ManagerModel
      * @throws \Speicher210\KontaktIO\Exception\ApiException
      */
-    public function getManager($id)
+    public function getManager($id): ManagerModel
     {
         try {
             $response = $this->client->get('/manager/' . $id);
@@ -37,7 +37,7 @@ class Manager extends AbstractResource
      * @return ManagerModel
      * @throws \Speicher210\KontaktIO\Exception\ApiException
      */
-    public function getMyManager()
+    public function getMyManager(): ManagerModel
     {
         return $this->getManager('me');
     }

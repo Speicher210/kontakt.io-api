@@ -48,7 +48,7 @@ class AbstractResource
      * @return ApiException
      * @throws \Speicher210\KontaktIO\Exception\ApiKeyInvalidException
      */
-    protected function createApiException(ClientException $e)
+    protected function createApiException(ClientException $e): ApiException
     {
         $response = $e->getResponse();
 

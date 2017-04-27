@@ -18,14 +18,14 @@ class GetTest extends AbstractResourceTest
         return Device::class;
     }
 
-    public function testGetDeviceReturnsDeviceObject()
+    public function testGetDeviceReturnsDeviceObject(): void
     {
         $deviceUniqueId = 'abc1';
 
         $clientMock = $this->getClientMock(['get']);
         $responseMock = $this->getClientResponseMock($this->getTestFixture('.json'));
         $clientMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('get')
             ->with('/device/' . $deviceUniqueId)
             ->willReturn($responseMock);
@@ -51,6 +51,26 @@ class GetTest extends AbstractResourceTest
             ->setFirmware('3.1')
             ->setProfiles([DeviceModel::PROFILE_IBEACON]);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testGetDeviceCredentials(): void
+    {
+        $deviceUniqueId = 'abc1';
+
+        $clientMock = $this->getClientMock(['get']);
+        $responseMock = $this->getClientResponseMock($this->getTestFixture('.json'));
+        $clientMock
+            ->expects(self::once())
+            ->method('get')
+            ->with('/device/' . $deviceUniqueId . '/credentials')
+            ->willReturn($responseMock);
+
+        /** @var Device $resource */
+        $resource = $this->getResourceToTest($clientMock);
+        $actual = $resource->getDeviceCredentials($deviceUniqueId);
+
+        self::assertEquals('pa$$w0rd', $actual->password());
+        self::assertEquals('m$$5terPa$$w0rd', $actual->masterPassword());
     }
 }
