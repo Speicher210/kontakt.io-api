@@ -47,7 +47,6 @@ class AbstractResource
         return SerializerBuilder::create()->build();
     }
 
-
     /**
      * Create an ApiException from a client exception.
      *

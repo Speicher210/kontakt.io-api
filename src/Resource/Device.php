@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\ClientException;
 use Speicher210\KontaktIO\AbstractResource;
 use Speicher210\KontaktIO\Model\Device as DeviceModel;
 use Speicher210\KontaktIO\Model\Device\Credentials as DeviceCredentialsModel;
+use Speicher210\KontaktIO\Model\Device\Update as DeviceUpdate;
 
 /**
  * Device resource.
@@ -52,23 +53,28 @@ class Device extends AbstractResource
     /**
      * Update devices.
      *
-     * @param string|array $uniqueId The unique IDs to update.
-     * @param string $deviceType The device type. One of the DEVICE_TYPE_* Device model constants.
-     * @param DeviceModel $values The values for the device(s).
-     * @return boolean
-     * @throws \Speicher210\KontaktIO\Exception\ApiException
+     * @param DeviceUpdate $deviceUpdate
+     * @return bool
      */
-    public function update($uniqueId, $deviceType, DeviceModel $values): bool
+    public function update(DeviceUpdate $deviceUpdate): bool
     {
-        $jsonSerialized = $this->serializer->serialize($values, 'json');
+        if ($deviceUpdate->physical() !== null) {
+            return $this->updatePhysical($deviceUpdate->uniqueId(), $deviceUpdate->physical());
+        }
+
+        return true;
+    }
+
+    private function updatePhysical(string $uniqueId, DeviceUpdate\Physical $physical): bool
+    {
+        $jsonSerialized = $this->serializer->serialize($physical, 'json');
         $values = \GuzzleHttp\json_decode($jsonSerialized, true);
 
-        $values['uniqueId'] = \implode(',', (array)$uniqueId);
-        $values['deviceType'] = $deviceType;
+        $values['uniqueId'] = $uniqueId;
 
         try {
             $response = $this->client->post(
-                '/device/update',
+                '/config/create',
                 [
                     'form_params' => $values,
                     'headers' => [

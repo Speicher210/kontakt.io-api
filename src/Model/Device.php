@@ -21,6 +21,9 @@ final class Device
     public const PROFILE_IBEACON = 'IBEACON';
     public const PROFILE_EDDYSTONE = 'EDDYSTONE';
 
+    public const PACKET_IBEACON = 'IBEACON';
+    public const PACKET_EDDYSTONE_URL = 'EDDYSTONE_URL';
+
     public const SPECIFICATION_STANDARD = 'STANDARD';
     public const SPECIFICATION_SENSOR = 'SENSOR';
     public const SPECIFICATION_TOUGH = 'TOUGH';
@@ -32,16 +35,6 @@ final class Device
     public const MODEL_SENSOR_BEACON = 'SENSOR_BEACON';
     public const MODEL_SMART_BEACON = 'SMART_BEACON';
     public const MODEL_USB_BEACON = 'USB_BEACON';
-
-    /**
-     * @param string $id Device ID.
-     * @param string $uniqueId Device unique ID.
-     */
-    public function __construct(string $id, string $uniqueId)
-    {
-        $this->id = $id;
-        $this->uniqueId = $uniqueId;
-    }
 
     /**
      * Device ID.
@@ -218,6 +211,14 @@ final class Device
     private $profiles;
 
     /**
+     * @param string $uniqueId Device unique ID.
+     */
+    public function __construct(string $uniqueId)
+    {
+        $this->uniqueId = $uniqueId;
+    }
+
+    /**
      * Get the ID.
      *
      * @return string
@@ -228,11 +229,24 @@ final class Device
     }
 
     /**
+     * Set the ID.
+     *
+     * @param string $id
+     * @return Device
+     */
+    public function setId(string $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get the unique ID.
      *
      * @return string
      */
-    public function uniqueId()
+    public function uniqueId(): string
     {
         return $this->uniqueId;
     }

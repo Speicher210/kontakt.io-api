@@ -34,8 +34,9 @@ class GetTest extends AbstractResourceTest
         $resource = $this->getResourceToTest($clientMock);
         $actual = $resource->getDevice($deviceUniqueId);
 
-        $expected = new DeviceModel('b6128ce9-acae-4898-952b-2bbf7136635f', $deviceUniqueId);
+        $expected = new DeviceModel($deviceUniqueId);
         $expected
+            ->setId('b6128ce9-acae-4898-952b-2bbf7136635f')
             ->setNamespace('f7826da6bc5b71e0893e')
             ->setInstanceId('316d4d77696f')
             ->setDeviceType(DeviceModel::DEVICE_TYPE_BEACON)

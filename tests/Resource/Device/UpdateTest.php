@@ -20,18 +20,13 @@ class UpdateTest extends AbstractResourceTest
 
     public function testUpdateDevice(): void
     {
-        $deviceUniqueId = 'abc1';
-        $deviceType = DeviceModel::DEVICE_TYPE_BEACON;
-        $major = 123;
-        $minor = 456;
-
         $clientMock = $this->getClientMock(['post']);
         $responseMock = $this->getClientResponseMock('Update successful.', 200);
         $clientMock
             ->expects(self::once())
             ->method('post')
             ->with(
-                '/device/update',
+                '/config/create',
                 self::callback(
                     function ($values) {
                         self::assertArrayHasKey('headers', $values);
@@ -40,15 +35,17 @@ class UpdateTest extends AbstractResourceTest
 
                         self::assertArrayHasKey('form_params', $values);
                         $expectedFormParams = [
-                            'id' => '',
-                            'uniqueId' => 'abc1',
+                            'uniqueId' => 'uniqueId',
                             'deviceType' => 'BEACON',
                             'major' => 123,
                             'minor' => 456,
-                            'alias' => 'alias value'
+                            'proximity' => '00000000-0000-0000-0000-000000000000',
+                            'txPower' => 5,
+                            'url' => '036578616d706c650074657374',
+                            'packets' => 'IBEACON,EDDYSTONE_URL'
                         ];
 
-                        self::assertSame($expectedFormParams, $values['form_params']);
+                        self::assertEquals($expectedFormParams, $values['form_params']);
 
                         return true;
                     }
@@ -58,12 +55,19 @@ class UpdateTest extends AbstractResourceTest
 
         /** @var Device $resource */
         $resource = $this->getResourceToTest($clientMock);
-        $values = new DeviceModel('', 'uniqueId'); // values get overwritten from method argument
-        $values->setDeviceType('deviceType'); // gets overwritten from method argument
-        $values->setAlias('alias value');
-        $values->setMajor($major);
-        $values->setMinor($minor);
-        $actual = $resource->update($deviceUniqueId, $deviceType, $values);
+
+        $physical = new DeviceModel\Update\Physical(
+            DeviceModel::DEVICE_TYPE_BEACON,
+            '00000000-0000-0000-0000-000000000000',
+            123,
+            456,
+            [DeviceModel::PACKET_IBEACON, DeviceModel::PACKET_EDDYSTONE_URL],
+            '036578616d706c650074657374',
+            5
+        );
+        $deviceUpdate = new DeviceModel\Update('uniqueId', $physical);
+
+        $actual = $resource->update($deviceUpdate);
 
         self::assertTrue($actual);
     }
