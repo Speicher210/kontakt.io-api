@@ -17,23 +17,6 @@ use Speicher210\KontaktIO\Client;
 abstract class AbstractResourceTest extends TestCase
 {
     /**
-     * The temporary directory for the serializer cache.
-     *
-     * @var string
-     */
-    private static $serializerTempDirectory;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function setUpBeforeClass()
-    {
-        if (self::$serializerTempDirectory === null) {
-            self::$serializerTempDirectory = \sys_get_temp_dir() . '/' . \uniqid('sp210_kontakio_api_test', true);
-        }
-    }
-
-    /**
      * Get the class name under test.
      *
      * @return string
@@ -69,8 +52,8 @@ abstract class AbstractResourceTest extends TestCase
             ->setMethods(['getBody', 'getStatusCode'])
             ->getMockForAbstractClass();
 
-        $mock->expects($this->any())->method('getBody')->with()->willReturn($body);
-        $mock->expects($this->any())->method('getStatusCode')->with()->willReturn($statusCode);
+        $mock->expects(self::any())->method('getBody')->with()->willReturn($body);
+        $mock->expects(self::any())->method('getStatusCode')->with()->willReturn($statusCode);
 
         return $mock;
     }
@@ -84,9 +67,7 @@ abstract class AbstractResourceTest extends TestCase
     protected function getResourceToTest(\PHPUnit_Framework_MockObject_MockObject $clientMock)
     {
         AnnotationRegistry::registerLoader('class_exists');
-        $serializer = SerializerBuilder::create()
-            ->setCacheDir(self::$serializerTempDirectory)
-            ->build();
+        $serializer = SerializerBuilder::create()->build();
 
         $class = $this->getClassUnderTest();
 
@@ -97,7 +78,7 @@ abstract class AbstractResourceTest extends TestCase
      * @param string $suffix Suffix to identify the file to read.
      * @return string
      */
-    protected function getTestFixture($suffix)
+    protected function getTestFixture($suffix): string
     {
         $reflection = new \ReflectionObject($this);
         $fixturesDirectory = \dirname($reflection->getFileName()) . '/Fixtures/';
