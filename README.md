@@ -20,18 +20,7 @@ $ composer require speicher210/kontakt.io-api
 
 ## Usage
 
-``` php
-require_once 'vendor/autoload.php';
-
-\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader('class_exists');
-
-$client = new \Speicher210\KontaktIO\Client('YOUR_API_KEY');
-$serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-
-$deviceResource = new \Speicher210\KontaktIO\Resource\Device($client, $serializer);
-$device = $deviceResource->getDevice('01gz');
-print_r($device);
-```
+See [example](example/) directory.
 
 ## Change log
 
