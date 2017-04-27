@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Speicher210\KontaktIO\Test\Resource;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use JMS\Serializer\SerializerBuilder;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Speicher210\KontaktIO\AbstractResource;
@@ -66,12 +64,9 @@ abstract class AbstractResourceTest extends TestCase
      */
     protected function getResourceToTest(\PHPUnit_Framework_MockObject_MockObject $clientMock)
     {
-        AnnotationRegistry::registerLoader('class_exists');
-        $serializer = SerializerBuilder::create()->build();
-
         $class = $this->getClassUnderTest();
 
-        return new $class($clientMock, $serializer);
+        return new $class($clientMock);
     }
 
     /**

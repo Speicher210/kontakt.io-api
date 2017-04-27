@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Speicher210\KontaktIO;
 
 use GuzzleHttp\Exception\ClientException;
+use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 use Speicher210\KontaktIO\Exception\ApiException;
 use Speicher210\KontaktIO\Exception\ApiKeyInvalidException;
@@ -35,11 +36,17 @@ class AbstractResource
      * @param Client $client The API client.
      * @param SerializerInterface $serializer Serializer interface to serialize / deserialize the request / responses.
      */
-    public function __construct(Client $client, SerializerInterface $serializer)
+    public function __construct(Client $client, SerializerInterface $serializer = null)
     {
         $this->client = $client;
-        $this->serializer = $serializer;
+        $this->serializer = $serializer ?? $this->buildSerializer();
     }
+
+    private function buildSerializer(): SerializerInterface
+    {
+        return SerializerBuilder::create()->build();
+    }
+
 
     /**
      * Create an ApiException from a client exception.
