@@ -122,7 +122,7 @@ final class Physical
         return $this->url;
     }
 
-    public function tyPower(): ?int
+    public function txPower(): ?int
     {
         return $this->txPower;
     }
